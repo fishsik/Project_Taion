@@ -72,3 +72,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Project_Taion_Tae_Sik/Library
 /Project_Taion_Tae_Sik/Temp
+/Project_Taion_Tae_Sik/obj
+/Project_Taion_Tae_Sik/Logs
