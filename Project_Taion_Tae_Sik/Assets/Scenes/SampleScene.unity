@@ -274,6 +274,7 @@ MonoBehaviour:
   aimingTime: 0.5
   bulletPrefab: {fileID: 1962828964267569682, guid: cc729a0f8069874438d9b5228d77281e, type: 3}
   maxSpeed: 300
+  plane: {fileID: 1160323716}
 --- !u!114 &457415753
 MonoBehaviour:
   m_ObjectHideFlags: 0

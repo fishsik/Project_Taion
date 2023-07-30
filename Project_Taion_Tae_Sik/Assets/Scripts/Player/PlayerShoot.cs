@@ -5,84 +5,82 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     public float coolTime;                  //쿨타임
-    private float timeAfterShoot;           //발사 직후 시간
+    private float time;           //발사 직후 시간
     public float aimingTime;               //조준 시간
-    private float timeAfterKeyDown;
     private float powerRatio;
     private Vector3 destination;
     public GameObject bulletPrefab;
     public float maxSpeed;
     private Vector3 arrowVelocity;
-    //private Rigidbody arrowRigidbody;
     private bool isAming;
+
+    private Vector3 mousePosition;
+    private Camera mainCamera;
+    private Ray ray;
+    public Transform plane;
 
     void Start()
     {
-        timeAfterShoot = coolTime;
+        time = coolTime;
         isAming = false;
+
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
-        timeAfterShoot += Time.deltaTime;
+        time += Time.deltaTime;
 
         if(Input.GetMouseButtonDown(0))
         {
-            if(timeAfterShoot >= coolTime)
+            if(time >= coolTime)
             {
                 isAming = true;
-                destination = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-                timeAfterShoot = 0;
+                time = 0;
+                //destination = getMousePosition();
+
+                mousePosition = Input.mousePosition;
+                ray = mainCamera.ScreenPointToRay(mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+                {
+                    if (hit.transform == plane) // 교차한 오브젝트가 y=0 평면인지 확인
+                    {
+                        destination = hit.point;
+                    }
+                }
             }
         }
 
         if(isAming)
         {
-            aim(destination, timeAfterShoot);           //조준 함수
+            aim(destination, time);           //조준 함수
         }
-        
-        // if(Input.GetMouseButton(0))
-        // {
-        //     timeAfterKeyDown += Time.deltaTime;
-        //     if(timeAfterKeyDown > aimingTime)
-        //     {
-        //         timeAfterKeyDown = aimingTime;
-        //     }
-        // }
-        // if(Input.GetMouseButtonUp(0))
-        // {
-        //     powerRatio = timeAfterKeyDown / aimingTime;
-        //     GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-        //     arrowVelocity = destination - bullet.transform.position;
-        //     arrowVelocity = arrowVelocity * maxSpeed * powerRatio / arrowVelocity.magnitude;
-            
-        //     arrowRigidbody = bullet.GetComponent<Rigidbody>();
-        //     arrowRigidbody.velocity = arrowVelocity;
-
-        //     timeAfterKeyDown = 0;
-        //     timeAfterShoot = 0;
-        // }
     }
+
+    // Vector3 getMousePosition()
+    // {
+
+    // }
 
     void aim(Vector3 destination, float timeAfterAim)
     {
         if(Input.GetMouseButton(0))
         {
-            if(timeAfterShoot > aimingTime)
+            if(time > aimingTime)
             {
-                timeAfterShoot = aimingTime;
+                time = aimingTime;
             }
         }
         if(Input.GetMouseButtonUp(0))
         {
-            powerRatio = timeAfterShoot / aimingTime;
+            powerRatio = time / aimingTime;
             GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             arrowVelocity = destination - bullet.transform.position;
             arrowVelocity = arrowVelocity * maxSpeed * powerRatio / arrowVelocity.magnitude;
 
             shoot(bullet, arrowVelocity);
             isAming = false;
-            timeAfterShoot = 0;
+            time = 0;
         }
     }
 
@@ -91,6 +89,10 @@ public class PlayerShoot : MonoBehaviour
         Rigidbody arrowRigidbody = bullet.GetComponent<Rigidbody>();
         arrowRigidbody.velocity = arrowVelocity;
     }
+    // public Vector3 velocity()
+    // {
+    //     //
+    // }
 }
 //좌클릭을 눌렀을 때부터 시간측정
 //좌클릭을 때는 순간 총알 발사
