@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float initialOrbitRadius;   //초기 궤도 반지름
     private float OrbitRadius;    //현재 궤도 반지름
