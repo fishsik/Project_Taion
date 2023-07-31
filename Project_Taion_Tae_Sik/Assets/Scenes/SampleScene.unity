@@ -252,7 +252,7 @@ Transform:
   m_GameObject: {fileID: 457415746}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.72, y: 2.2, z: -1.39}
+  m_LocalPosition: {x: 12.72, y: 0, z: -1.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -273,7 +273,6 @@ MonoBehaviour:
   coolTime: 0.5
   aimingTime: 0.5
   bulletPrefab: {fileID: 1962828964267569682, guid: cc729a0f8069874438d9b5228d77281e, type: 3}
-  maxSpeed: 300
   plane: {fileID: 1160323716}
 --- !u!114 &457415753
 MonoBehaviour:
@@ -288,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialOrbitRadius: 10
-  initialAngularVelocity: 300
+  initialAngularVelocity: 150
   changeOrbitRadius: 5
 --- !u!1 &705507993
 GameObject:

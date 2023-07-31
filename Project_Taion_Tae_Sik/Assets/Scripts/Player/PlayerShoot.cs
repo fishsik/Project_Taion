@@ -5,15 +5,12 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     public float coolTime;                  //쿨타임
-    private float time;           //발사 직후 시간
     public float aimingTime;               //조준 시간
-    private float speed;
-    private Vector3 destination;
     public GameObject bulletPrefab;
-    public float maxSpeed;
-    private Vector3 arrowVelocity;
+    private float time;           //발사 직후 시간
+    private Vector3 destination;
     private bool isAming;
-    private Rigidbody playerRigidbody;
+    //private Rigidbody playerRigidbody;
     
     public Transform plane;
 
@@ -21,7 +18,7 @@ public class PlayerShoot : MonoBehaviour
     {
         time = coolTime;
         isAming = false;
-        playerRigidbody = GetComponent<Rigidbody>();
+        //playerRigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -61,27 +58,29 @@ public class PlayerShoot : MonoBehaviour
         return destination;
     }
 
-    void aim(Vector3 destination, float timeAfterAim)
+    void aim(Vector3 destination, float time)
     {
-        if(Input.GetMouseButton(0))
+        float speed;
+        Vector3 arrowVelocity;
+
+        if(Input.GetMouseButtonUp(0))
         {
             if(time > aimingTime)
             {
                 time = aimingTime;
-                Debug.Log("최대 세기!");
             }
-        }
-        if(Input.GetMouseButtonUp(0))
-        {
+
             GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+            Bullet arrow = bullet.GetComponent<Bullet>();
 
-            speed = maxSpeed * time / aimingTime;
+            speed = arrow.maxSpeed * time / aimingTime;
             arrowVelocity = velocity(bullet.transform.position, destination, speed);
-            Debug.Log("원래 속력 : " + speed);
+            // Debug.Log("원래 속력 : " + speed);
 
-            speed += Vector3.Dot(playerRigidbody.velocity, arrowVelocity) / arrowVelocity.magnitude;        //player의 속도를 반영해서 화살 속도 계산(상대속도)
-            arrowVelocity = velocity(arrowVelocity, speed);
-            Debug.Log("상대속도 반영한 속력 : " + speed);
+            // speed += Vector3.Dot(playerRigidbody.velocity, arrowVelocity) / arrowVelocity.magnitude;        //player의 속도를 반영해서 화살 속도 계산(상대속도)
+            // Debug.Log("추가 값" + Vector3.Dot(playerRigidbody.velocity, arrowVelocity) / arrowVelocity.magnitude);
+            // arrowVelocity = velocity(arrowVelocity, speed);
+            // Debug.Log("상대속도 반영한 속력 : " + speed);
             
             shoot(bullet, arrowVelocity);
 
@@ -93,7 +92,7 @@ public class PlayerShoot : MonoBehaviour
     void shoot(GameObject bullet, Vector3 velocity)
     {
         Rigidbody arrowRigidbody = bullet.GetComponent<Rigidbody>();
-        arrowRigidbody.velocity = arrowVelocity;
+        arrowRigidbody.velocity = velocity;
     }
     public Vector3 velocity(Vector3 departure, Vector3 arrival, float speed)
     {
