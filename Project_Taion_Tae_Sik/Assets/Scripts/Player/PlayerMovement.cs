@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float playerSpeed;  //플레이어 초기 속도
+    public float playerSpeed;  //플레이어 속도
+    public float initialPlayerSpeed;    //플레이어 초기 속도
     public float changeOrbitRadius;  //궤도 변경 반지름
     public float initialOrbitRadius;   //초기 궤도 반지름(최소)
     private float OrbitRadius;    //현재 궤도 반지름
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     {
         deg = 0;
         OrbitRadius = initialOrbitRadius;
+        playerSpeed = initialPlayerSpeed;
         gameObject.transform.position = new Vector3(OrbitRadius, 0, 0);     //player의 초기 위치 설정
     }
 
