@@ -5,6 +5,8 @@ using UnityEngine;
 public class Dash : MonoBehaviour
 {
     private float dashGauge;            //대쉬 게이지
+    public float dashGaugeMax;          //대쉬 게이지 최대
+    public float dashGaugeMin;          //대쉬 게이지 최소
     public float gaugeRechargeSpeed;    //게이지 충전 속도
     public float gaugeConsumeSpeed;     //게이지 소모 속도
     public float ratio;
@@ -13,60 +15,58 @@ public class Dash : MonoBehaviour
     
     void Start()
     {
-        dashGauge = 100;
+        dashGauge = dashGaugeMax;
         isDash = false;
         playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
-        Recharge();
-        
-        
+        Boost();
+        Debug.Log(dashGauge);
+    }
+    void Boost()
+    {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(dashGauge > 0)
-            {
-                isDash = true;
-                playerMovement.playerSpeed *= ratio;
-            }
+            isDash = true;
+            playerMovement.playerSpeed *= ratio;
         }
 
         if(isDash)
         {
-            if(dashGauge > 0)
+            if(Input.GetKeyUp(KeyCode.Space) || dashGauge <= 0)
             {
-                Consume();
+                playerMovement.playerSpeed /= ratio;
+                isDash = false;
             }
-
             else
             {
-                isDash = false;
-                playerMovement.playerSpeed /= ratio;
-                dashGauge = 0;
-            }
-
-            if(Input.GetKeyUp(KeyCode.Space))
-            {
-                playerMovement.playerSpeed /= ratio;
-                isDash = false;
+                Consume(ref dashGauge, dashGaugeMax, dashGaugeMin, gaugeConsumeSpeed);
             }
         }
-    }
 
-    void Recharge()
-    {
-        dashGauge += Time.deltaTime * gaugeRechargeSpeed;
-        
-        if(dashGauge > 100)
+        else
         {
-            dashGauge = 100;
+            Recharge(ref dashGauge, dashGaugeMax, dashGaugeMin, gaugeRechargeSpeed);
         }
     }
-
-    void Consume()
+    void Recharge(ref float value, float max, float min, float ratio)
     {
-        dashGauge -= Time.deltaTime * gaugeConsumeSpeed;
+        value += Time.deltaTime * ratio;
+        correctValue(ref value, max, min);
+    }
+
+    void Consume(ref float value, float max, float min, float ratio)
+    {
+        value -= Time.deltaTime * ratio;
+        correctValue(ref value, max, min);
+    }
+
+    void correctValue(ref float value, float max, float min)
+    {
+        if(value > max) value = max;
+        if(value < min) value = min;
     }
 }
 //space 키를 누르는 동안 이동이 잠깐 증가함(50% 증가)

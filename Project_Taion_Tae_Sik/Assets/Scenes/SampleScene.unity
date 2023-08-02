@@ -303,9 +303,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3dd4fce16cddd4694b95c1ec16f7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashGaugeMax: 100
+  dashGaugeMin: 0
   gaugeRechargeSpeed: 5
-  gaugeConsumeSpeed: 10
-  ratio: 1.5
+  gaugeConsumeSpeed: 25
+  ratio: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
