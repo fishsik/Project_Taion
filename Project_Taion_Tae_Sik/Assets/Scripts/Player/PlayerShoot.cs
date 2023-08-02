@@ -8,9 +8,9 @@ public class PlayerShoot : MonoBehaviour
     public float aimingTime;               //조준 시간
     public GameObject bulletPrefab;
     private float time;           //발사 직후 시간
-    private Vector3 destination;
+    //private Vector3 destination;
     private bool isAming;
-    //private Rigidbody playerRigidbody;
+    private PlayerMovement playerMovement;
     
     public Transform plane;
 
@@ -18,7 +18,7 @@ public class PlayerShoot : MonoBehaviour
     {
         time = coolTime;
         isAming = false;
-        //playerRigidbody = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -31,13 +31,13 @@ public class PlayerShoot : MonoBehaviour
             {
                 isAming = true;
                 time = 0;
-                destination = getMousePosition();
+                //destination = getMousePosition();
             }
         }
 
         if(isAming)
         {
-            aim(destination, time);           //조준 함수
+            aim(time);           //조준 함수
         }
     }
 
@@ -58,13 +58,17 @@ public class PlayerShoot : MonoBehaviour
         return destination;
     }
 
-    void aim(Vector3 destination, float time)
+    void aim(float time)
     {
         float speed;
         Vector3 arrowVelocity;
+        Vector3 destination;
 
         if(Input.GetMouseButtonUp(0))
         {
+            destination = getMousePosition();
+            //Debug.Log("마우스 위치 : " + destination);
+
             if(time > aimingTime)
             {
                 time = aimingTime;
@@ -73,15 +77,15 @@ public class PlayerShoot : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             Bullet arrow = bullet.GetComponent<Bullet>();
 
-            speed = arrow.maxSpeed * time / aimingTime;
-            arrowVelocity = velocity(bullet.transform.position, destination, speed);
-            // Debug.Log("원래 속력 : " + speed);
-
-            // speed += Vector3.Dot(playerRigidbody.velocity, arrowVelocity) / arrowVelocity.magnitude;        //player의 속도를 반영해서 화살 속도 계산(상대속도)
-            // Debug.Log("추가 값" + Vector3.Dot(playerRigidbody.velocity, arrowVelocity) / arrowVelocity.magnitude);
-            // arrowVelocity = velocity(arrowVelocity, speed);
-            // Debug.Log("상대속도 반영한 속력 : " + speed);
+            arrowVelocity = velocity(bullet.transform.position, destination, 1f);       //속도(방향만) 생성
             
+            
+            //speed = arrow.maxSpeed * time / aimingTime + Vector3.Dot(playerMovement.velocity(), arrowVelocity);        //player의 속도를 반영해서 화살 속도 계산(상대속도)
+            speed = arrow.maxSpeed + (time / aimingTime - 1) * (arrow.maxSpeed - arrow.minSpeed) + Vector3.Dot(playerMovement.velocity(), arrowVelocity);
+            Debug.Log("속력" + speed);
+            //Debug.Log("플레이어의 속도 : " + Vector3.Dot(playerMovement.velocity(), arrowVelocity));
+            arrowVelocity = velocity(arrowVelocity, speed);
+            //Debug.Log("화살의 속도 : " + arrowVelocity);
             shoot(bullet, arrowVelocity);
 
             isAming = false;
@@ -103,7 +107,8 @@ public class PlayerShoot : MonoBehaviour
     }
     public Vector3 velocity(Vector3 velocity, float speed)
     {
-        velocity = velocity * speed / velocity.magnitude;
+        velocity = velocity / velocity.magnitude;       //단위벡터로 변형
+        velocity = speed * velocity;
         return velocity;
     }
 

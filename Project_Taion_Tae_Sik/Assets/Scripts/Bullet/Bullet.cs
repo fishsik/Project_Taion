@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float maxSpeed;      //화살의 최대 속도
+    public float minSpeed;
     private float mapRadius;
 
     void Start()

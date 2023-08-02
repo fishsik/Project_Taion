@@ -4,21 +4,41 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float initialOrbitRadius;   //초기 궤도 반지름
+    public float playerSpeed;  //플레이어 초기 속도
+    public float changeOrbitRadius;  //궤도 변경 반지름
+    public float initialOrbitRadius;   //초기 궤도 반지름(최소)
     private float OrbitRadius;    //현재 궤도 반지름
     private float deg;       //각도
-    public float initialAngularVelocity;  //플레이어 초기 각속도
-    public float changeOrbitRadius;  //궤도 변경 반지름
 
     void Start()
     {
         deg = 0;
         OrbitRadius = initialOrbitRadius;
-        gameObject.transform.position = new Vector3(OrbitRadius, 3, 0);     //player의 초기 위치 설정
+        gameObject.transform.position = new Vector3(OrbitRadius, 0, 0);     //player의 초기 위치 설정
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        float z;
+        float x;
+
+        changeOrbit();
+
+        deg += Time.deltaTime * initialOrbitRadius * playerSpeed / OrbitRadius;
+        if(deg < 360)
+        {
+            z = OrbitRadius * Mathf.Sin(Mathf.Deg2Rad * deg);
+            x = OrbitRadius * Mathf.Cos(Mathf.Deg2Rad * deg);
+            gameObject.transform.position = new Vector3(x, 0, z);
+            gameObject.transform.rotation = Quaternion.Euler(0, deg * -1, 0);
+        }
+        else
+        {
+            deg = 0;
+        }        
+    }
+
+    void changeOrbit()
     {
         if(Input.GetKeyDown(KeyCode.D))
         {
@@ -34,19 +54,13 @@ public class PlayerMovement : MonoBehaviour
                 OrbitRadius -= changeOrbitRadius;
             }
         }
+    }
 
-        deg += Time.deltaTime * initialOrbitRadius * initialAngularVelocity / OrbitRadius;
-        if(deg < 360)
-        {
-            var rad = Mathf.Deg2Rad * deg;
-            var z = OrbitRadius * Mathf.Sin(rad);
-            var x = OrbitRadius * Mathf.Cos(rad);
-            gameObject.transform.position = new Vector3(x, 0, z);
-            gameObject.transform.rotation = Quaternion.Euler(0, deg * -1, 0);
-        }
-        else
-        {
-            deg = 0;
-        }        
+    public Vector3 velocity()
+    {
+        float velocityX = -Mathf.Sin(Mathf.Deg2Rad * deg);
+        float velocityY = Mathf.Cos(Mathf.Deg2Rad * deg);
+        
+        return playerSpeed * new Vector3(velocityX, velocityY);
     }
 }
