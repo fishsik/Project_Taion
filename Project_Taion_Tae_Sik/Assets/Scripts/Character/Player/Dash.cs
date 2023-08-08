@@ -11,13 +11,13 @@ public class Dash : MonoBehaviour
     public float gaugeConsumeSpeed;     //게이지 소모 속도
     public float ratio;
     private bool isDash;                //Dash 중인가?
-    private PlayerMovement playerMovement;
+    private Movement movement;
     
     void Start()
     {
         dashGauge = dashGaugeMax;
         isDash = false;
-        playerMovement = GetComponent<PlayerMovement>();
+        movement = GetComponent<Movement>();
     }
 
     void Update()
@@ -30,14 +30,14 @@ public class Dash : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             isDash = true;
-            playerMovement.playerSpeed *= ratio;
+            movement.speed *= ratio;
         }
 
         if(isDash)
         {
             if(Input.GetKeyUp(KeyCode.Space) || dashGauge <= 0)
             {
-                playerMovement.playerSpeed /= ratio;
+                movement.speed /= ratio;
                 isDash = false;
             }
             else
