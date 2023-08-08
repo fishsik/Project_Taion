@@ -15,7 +15,7 @@ public class CharacterMovement : Movement
     /*void Start()
     {
         //...
-    }
+    }c
 
     void Update()
     {
@@ -24,17 +24,17 @@ public class CharacterMovement : Movement
 
     protected void IncreaseOrbit()
     {
-        if(OrbitRadius >= minOrbitRadius && OrbitRadius < minOrbitRadius + 5 * changeOrbitRadius)
+        if(orbitRadius >= minOrbitRadius && orbitRadius < minOrbitRadius + 5 * changeOrbitRadius)
         {
-            OrbitRadius += changeOrbitRadius;
+            orbitRadius += changeOrbitRadius;
         }
     }
 
     protected void DecreaseOrbit()
     {
-        if(OrbitRadius > minOrbitRadius && OrbitRadius <= minOrbitRadius + 5 * changeOrbitRadius)
+        if(orbitRadius > minOrbitRadius && orbitRadius <= minOrbitRadius + 5 * changeOrbitRadius)
         {
-                OrbitRadius -= changeOrbitRadius;
+                orbitRadius -= changeOrbitRadius;
         }
     }
 

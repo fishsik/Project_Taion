@@ -30,14 +30,14 @@ public class Dash : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             isDash = true;
-            movement.speed *= ratio;
+            movement.SetSpeed(movement.Speed() * ratio);
         }
 
         if(isDash)
         {
             if(Input.GetKeyUp(KeyCode.Space) || dashGauge <= 0)
             {
-                movement.speed /= ratio;
+                movement.SetSpeed(movement.Speed() / ratio);
                 isDash = false;
             }
             else

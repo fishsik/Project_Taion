@@ -7,9 +7,9 @@ public class PlayerMovement : CharacterMovement
 
     void Start()
     {
-        gameObject.transform.position = new Vector3(OrbitRadius, 0, 0);     //player의 초기 위치 설정
+        gameObject.transform.position = new Vector3(orbitRadius, 0, 0);     //player의 초기 위치 설정
         deg = 0;
-        OrbitRadius = minOrbitRadius;
+        orbitRadius = minOrbitRadius;
         speed = initialSpeed;
     }
 
