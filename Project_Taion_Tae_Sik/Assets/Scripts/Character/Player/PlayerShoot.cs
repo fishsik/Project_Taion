@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : Shoot
 {
     public float coolTime;                  //쿨타임
     public float aimingTime;               //조준 시간
