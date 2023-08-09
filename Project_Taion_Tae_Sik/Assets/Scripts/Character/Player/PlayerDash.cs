@@ -22,8 +22,22 @@ public class PlayerDash : Dash
 
     void Update()
     {
-        PlayerBoost();
-        //Debug.Log(dashGauge);
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            BoostOn();
+        }
+        if(isDash)
+        {
+            Boosting();
+        }
+        else
+        {
+            Recharge(ref dashGauge, dashGaugeMax, dashGaugeMin, gaugeRechargeSpeed);
+        }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            BoostOff();
+        }
     }
     
 }

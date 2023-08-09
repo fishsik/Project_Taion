@@ -26,7 +26,7 @@ public class EnemyMovement : CharacterMovement
         Revolve();
 
         timeAfterSpawn += Time.deltaTime;
-
+        
         if(timeAfterSpawn >= spawnRate)
         {
             timeAfterSpawn = 0;

@@ -13,34 +13,7 @@ public class Dash : MonoBehaviour
     protected bool isDash;                //Dash 중인가?
     protected Movement movement;
 
-    protected void PlayerBoost()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            isDash = true;
-            movement.SetSpeed(movement.Speed() * ratio);
-        }
-
-        if(isDash)
-        {
-            if(Input.GetKeyUp(KeyCode.Space) || dashGauge <= 0)
-            {
-                movement.SetSpeed(movement.Speed() / ratio);
-                isDash = false;
-            }
-            else
-            {
-                Consume(ref dashGauge, dashGaugeMax, dashGaugeMin, gaugeConsumeSpeed);
-            }
-        }
-
-        else
-        {
-            Recharge(ref dashGauge, dashGaugeMax, dashGaugeMin, gaugeRechargeSpeed);
-        }
-    }
-
-    protected void Boost()
+    protected void BoostOn()
     {
         isDash = true;
         movement.SetSpeed(movement.Speed() * ratio);
@@ -48,27 +21,36 @@ public class Dash : MonoBehaviour
 
     protected void Boosting()
     {
-        //
+        if(dashGauge > 0)
+        {
+            Consume(ref dashGauge, dashGaugeMax, dashGaugeMin, gaugeConsumeSpeed);
+        }
+        else
+        {
+            BoostOff();
+        }
+
     }
 
     protected void BoostOff()
     {
-        //
+        isDash = false;
+        movement.SetSpeed(movement.Speed() / ratio);
     }
 
-    void Recharge(ref float value, float max, float min, float ratio)
+    protected void Recharge(ref float value, float max, float min, float ratio)
     {
         value += Time.deltaTime * ratio;
-        correctValue(ref value, max, min);
+        CorrectValue(ref value, max, min);
     }
 
-    void Consume(ref float value, float max, float min, float ratio)
+    private void Consume(ref float value, float max, float min, float ratio)
     {
         value -= Time.deltaTime * ratio;
-        correctValue(ref value, max, min);
+        CorrectValue(ref value, max, min);
     }
 
-    void correctValue(ref float value, float max, float min)
+    private void CorrectValue(ref float value, float max, float min)
     {
         if(value > max) value = max;
         if(value < min) value = min;

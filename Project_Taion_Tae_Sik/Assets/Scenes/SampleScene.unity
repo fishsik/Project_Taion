@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolTime: 0.5
-  aimingTime: 0.5
+  aimingTimeMax: 0.5
   bulletPrefab: {fileID: 1962828964267569682, guid: cc729a0f8069874438d9b5228d77281e, type: 3}
   plane: {fileID: 1160323716}
 --- !u!114 &457415756
@@ -612,8 +612,9 @@ GameObject:
   - component: {fileID: 1697364848}
   - component: {fileID: 1697364847}
   - component: {fileID: 1697364846}
-  - component: {fileID: 1697364843}
   - component: {fileID: 1697364851}
+  - component: {fileID: 1697364852}
+  - component: {fileID: 1697364853}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -621,23 +622,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1697364843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697364842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3dd4fce16cddd4694b95c1ec16f7c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashGaugeMax: 100
-  dashGaugeMin: 0
-  gaugeRechargeSpeed: 5
-  gaugeConsumeSpeed: 25
-  ratio: 2
 --- !u!54 &1697364846
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -769,6 +753,47 @@ MonoBehaviour:
   spawnRateMin: 0.5
   spawnRateMax: 3
   changeOrbitProbability: 0.5
+--- !u!114 &1697364852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697364842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e819a6b61561f8346933b6e0307d290f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashGaugeMax: 100
+  dashGaugeMin: 0
+  gaugeRechargeSpeed: 5
+  gaugeConsumeSpeed: 25
+  ratio: 2
+  startRateMin: 0.5
+  startRateMax: 5
+  endRateMin: 0.5
+  endRateMax: 3
+--- !u!114 &1697364853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697364842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289cf84c0f4f0cf4a8218eae74518337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolTime: 0.5
+  aimingTimeMax: 0.5
+  bulletPrefab: {fileID: 1962828964267569682, guid: b619efdbb0e44f5458959f4531ab905b, type: 3}
+  player: {fileID: 457415746}
+  startRateMin: 0.5
+  startRateMax: 5
+  endRateMin: 0
+  endRateMax: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

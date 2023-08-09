@@ -4,40 +4,35 @@ using UnityEngine;
 
 public class PlayerShoot : Shoot
 {
-    public float coolTime;                  //쿨타임
-    public float aimingTime;               //조준 시간
-    public GameObject bulletPrefab;
-    private float time;           //발사 직후 시간
-    //private Vector3 destination;
-    private bool isAming;
-    private PlayerMovement playerMovement;
-    
+    private Vector3 destination;   
     public Transform plane;
 
     void Start()
     {
-        time = coolTime;
-        isAming = false;
-        playerMovement = GetComponent<PlayerMovement>();
+        aimingTime = coolTime;
+        isAiming = false;
+        movement = GetComponent<Movement>();
     }
 
     void Update()
     {
-        time += Time.deltaTime;
+        aimingTime += Time.deltaTime;
 
-        if(Input.GetMouseButtonDown(0))
+        if(aimingTime >= coolTime && Input.GetMouseButtonDown(0))
         {
-            if(time >= coolTime)
-            {
-                isAming = true;
-                time = 0;
-                //destination = getMousePosition();
-            }
+            isAiming = true;
+            aimingTime = 0;
         }
 
-        if(isAming)
+        if(isAiming && Input.GetMouseButtonUp(0))
         {
-            Aim(time, playerMovement);           //조준 함수
+            destination = GetMousePosition();
+
+            Launch(destination, PowerRatio(aimingTime));
+
+
+            aimingTime = 0;
+            isAiming = false;
         }
     }
 
@@ -57,60 +52,6 @@ public class PlayerShoot : Shoot
         }
         return destination;
     }
-
-    void Aim(float time, PlayerMovement playerMovement)
-    {
-        float speed;
-        Vector3 arrowVelocity;
-        Vector3 destination;
-
-        if(Input.GetMouseButtonUp(0))
-        {
-            destination = GetMousePosition();
-            //Debug.Log("마우스 위치 : " + destination);
-
-            if(time > aimingTime)
-            {
-                time = aimingTime;
-            }
-
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-            Bullet arrow = bullet.GetComponent<Bullet>();
-
-            arrowVelocity = Velocity(bullet.transform.position, destination, 1f);       //속도(방향만) 생성
-            
-            
-            
-            speed = arrow.maxSpeed + (time / aimingTime - 1) * (arrow.maxSpeed - arrow.minSpeed) + Vector3.Dot(playerMovement.Velocity(), arrowVelocity);
-            //Debug.Log("속력" + speed);
-            arrowVelocity = Velocity(arrowVelocity, speed);
-
-            Shoot(bullet, arrowVelocity);
-
-            isAming = false;
-            time = 0;
-        }
-    }
-
-    void Shoot(GameObject bullet, Vector3 velocity)
-    {
-        Rigidbody arrowRigidbody = bullet.GetComponent<Rigidbody>();
-        arrowRigidbody.velocity = velocity;
-    }
-    public Vector3 Velocity(Vector3 departure, Vector3 arrival, float speed)
-    {
-        Vector3 velocity = arrival - departure;
-        velocity = velocity * speed / velocity.magnitude;
-
-        return velocity;
-    }
-    public Vector3 Velocity(Vector3 velocity, float speed)
-    {
-        velocity = velocity / velocity.magnitude;       //단위벡터로 변형
-        velocity = speed * velocity;
-        return velocity;
-    }
-
 }
 //좌클릭을 눌렀을 때부터 시간측정
 //좌클릭을 때는 순간 총알 발사
