@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash : MonoBehaviour
+public class Dash : Gimmicks
 {
     protected float dashGauge;            //대쉬 게이지
     public float dashGaugeMax;          //대쉬 게이지 최대

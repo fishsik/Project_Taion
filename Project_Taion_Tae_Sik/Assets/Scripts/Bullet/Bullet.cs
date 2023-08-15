@@ -6,15 +6,10 @@ public class Bullet : MonoBehaviour
 {
     public float maxSpeed;      //화살의 최대 속도
     public float minSpeed;
-    private float mapRadius;
+    protected const float mapRadius = 70;
+    public float strengthMax;      //총알의 공격력
 
-    void Start()
-    {
-        mapRadius = 50 * Mathf.Sqrt(2);
-    }
-
-    // Update is called once per frame
-    void Update()
+    protected void DestructBullet()
     {
         if(gameObject.transform.position.magnitude > mapRadius)
         {

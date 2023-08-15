@@ -139,9 +139,10 @@ GameObject:
   - component: {fileID: 457415755}
   - component: {fileID: 457415756}
   - component: {fileID: 457415757}
+  - component: {fileID: 457415758}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,6 +308,22 @@ MonoBehaviour:
   gaugeRechargeSpeed: 5
   gaugeConsumeSpeed: 25
   ratio: 2
+--- !u!114 &457415758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457415746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74093ff6a2ec6c449a44c4e6899afb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HpGaugeMax: 100
+  MpGaugeMax: 100
+  HpRecoverSpeed: 10
+  MpRecoverSpeed: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,9 +632,10 @@ GameObject:
   - component: {fileID: 1697364851}
   - component: {fileID: 1697364852}
   - component: {fileID: 1697364853}
+  - component: {fileID: 1697364854}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -794,6 +812,22 @@ MonoBehaviour:
   startRateMax: 5
   endRateMin: 0
   endRateMax: 3
+--- !u!114 &1697364854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697364842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04dc52c9612f0fa4189f2701dba9f095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HpGaugeMax: 100
+  MpGaugeMax: 100
+  HpRecoverSpeed: 10
+  MpRecoverSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
