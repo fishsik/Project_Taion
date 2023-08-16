@@ -148,4 +148,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 300
   minSpeed: 150
-  strengthMax: 5
+  strengthMax: 80

@@ -322,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HpGaugeMax: 100
   MpGaugeMax: 100
-  HpRecoverSpeed: 10
+  HpRecoverSpeed: 1
   MpRecoverSpeed: 10
 --- !u!1 &705507993
 GameObject:
@@ -826,7 +826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HpGaugeMax: 100
   MpGaugeMax: 100
-  HpRecoverSpeed: 10
+  HpRecoverSpeed: 1
   MpRecoverSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

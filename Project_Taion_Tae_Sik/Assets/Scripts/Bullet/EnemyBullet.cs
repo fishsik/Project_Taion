@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class EnemyBullet : Bullet
 {
-    
+    private PlayerMovement playerMovement;
+    private PlayerHealth playerHealth;
+    private Rigidbody bulletRigidbody;
+            
+    private float powerRatio;
+    private float strength;
+
     void Start()
     {
-        
+        bulletRigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -20,12 +26,11 @@ public class EnemyBullet : Bullet
     {
         if(other.tag == "Player")
         {
-            PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            Rigidbody bulletRigidbody = GetComponent<Rigidbody>();
+            playerMovement = other.GetComponent<PlayerMovement>();
+            playerHealth = other.GetComponent<PlayerHealth>();
             
-            float powerRatio = (bulletRigidbody.velocity - playerMovement.Velocity()).magnitude / maxSpeed;
-            float strength = strengthMax * powerRatio;
+            powerRatio = (bulletRigidbody.velocity - playerMovement.Velocity()).magnitude / maxSpeed;
+            strength = strengthMax * powerRatio;
 
             playerHealth.Damage(strength);
             Destroy(gameObject);

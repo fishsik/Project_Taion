@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class EnemyHealth : CharacterHealth
 {
-    // Start is called before the first frame update
+    
     void Start()
     {
         HpGauge = HpGaugeMax;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        RecoverHp();
+        Debug.Log("체력 : " + HpGauge);
+
+        if(HpGauge < 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
